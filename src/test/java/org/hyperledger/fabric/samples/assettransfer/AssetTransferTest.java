@@ -312,14 +312,14 @@ public final class AssetTransferTest {
             ChaincodeStub stub = mock(ChaincodeStub.class);
             when(ctx.getStub()).thenReturn(stub);
             when(stub.getStringState("asset1"))
-                    .thenReturn("{ \"assetID\": \"asset1\", \"color\": \"red\", \"size\": 65, \"owner\": \"Nimal\", \"appraisedValue\": 60 }");
+                    .thenReturn("{ \"assetID\": \"asset1\", \"color\": \"red\", \"size\": 65, \"owner\": \"Arturo\", \"appraisedValue\": 60 }");
 
             Asset asset = contract.DuplicateAsset(ctx, "asset1", "asset9", "Kamal");
             assertThat(asset).isEqualTo(new Asset("asset9", "red", 65, "Kamal", 60));
 
 
             Throwable thrown = catchThrowable(() -> {
-                contract.DuplicateAsset(ctx, "asset1", "asset1", "Nimal");
+                contract.DuplicateAsset(ctx, "asset1", "asset1", "Kamal");
             });
             assertThat(thrown).isInstanceOf(ChaincodeException.class).hasNoCause()
                     .hasMessage("Asset asset1 already exists");
@@ -335,7 +335,7 @@ public final class AssetTransferTest {
             when(stub.getStringState("asset1")).thenReturn("");
 
             Throwable thrown = catchThrowable(() -> {
-                contract.DuplicateAsset(ctx, "asset1", "asset9", "Nimal");
+                contract.DuplicateAsset(ctx, "asset1", "asset9", "Kamal");
             });
 
             assertThat(thrown).isInstanceOf(ChaincodeException.class).hasNoCause()
